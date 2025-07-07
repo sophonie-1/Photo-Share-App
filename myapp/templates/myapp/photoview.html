@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% block title %}Photo view{% endblock title %}
+<p></p>
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+      <h1 class="text-capitalize">Photo Details</h1>
+      {{photo.name}}
+      <div class="card">
+        <img src="{{ photo.image.url }}" alt="Photo" class="card-img-top" style="max-width: 100%" />
+        <div class="card-body">
+          <h5 class="card-title">{{ photo.category.name }}</h5>
+          <p class="card-text">{{ photo.description }}</p>
+          <p class="card-text">Created at: {{ photo.date }}</p>
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'gallery' %}" class="btn btn-secondary">Back to Gallery</a>
+          {% if request.user == photo.user %}
+          <a href="{% url 'update-image' photo.id %}" class="btn btn-warning">Update</a>
+          <a href="{% url 'delete-image' photo.id %}" class="btn btn-danger">Delete</a>
+          {% endif %}
+        </div>
+      </div>
+      {% if can_comment %}
+      <h3 class="mt-4">Leave a Comment</h3>
+      <form action="{% url 'comment' photo.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit Comment" class="btn btn-primary">
+      </form>
+      {% endif %}
+     
+      {% comment %} comment section {% endcomment %}
+      <h2 class="mt-4">Comments</h2>
+      {% if comments %}
+      <ul class="list-group">
+        {% for comment in comments %}
+        <li class="list-group-item">
+          <strong>{{ comment.user.username }}</strong>:
+          {{ comment.comment }}
+          <span class="text-muted float-end">{{ comment.date }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No comments yet.</p>
+      {% endif %}
+      {% comment %} comment section {% endcomment %}
+      
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Delete Photo{% endblock title %}
+<p></p>
+{% block content %}
+<div class="container">
+  <p class="text-center">Are you sure you want to delete this photo?</p>
+  <div class="card">
+    <img
+      src="{{ photo.image.url }}"
+      alt="Photo to delete"
+      class="card-img-top"
+      style="height: 400px; object-fit: cover"
+    />
+    <div class="card-body text-center">
+      <h5 class="card-title">{{ photo.category.name }}</h5>
+      <p class="card-text">{{ photo.description }}</p>
+      <p class="card-text">Created at: {{ photo.date }}</p>
+    </div>
+    <form action="{% url 'delete-image' photo.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Confirm Delete" class="btn btn-danger" />
+      <a href="{% url 'gallery' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock content %}

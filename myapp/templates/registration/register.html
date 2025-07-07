@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+{% block content %}
+<style>
+   body {
+      background-color: #2d4359;
+      /* Dark blue background */
+      font-family: 'Inter', sans-serif;
+      /* Consistent font */
+   }
+
+   .card {
+      background-color: #ffffff;
+      /* White card background */
+      border-radius: 0.5rem;
+      /* Rounded corners */
+   }
+
+   .btn-primary {
+      background-color: #007bff;
+      /* Primary button color */
+      border-color: #007bff;
+      /* Button border color */
+   }
+
+   .btn-primary:hover {
+      background-color: #0056b3;
+      /* Darker shade on hover */
+      border-color: #0056b3;
+      /* Darker border on hover */
+   }
+
+   .text-info {
+      color: #17a2b8;
+      /* Info text color */
+   }
+
+   .text-info:hover {
+      color: #138496;
+      /* Darker shade on hover */
+      text-decoration: underline;
+      /* Underline on hover */
+   }
+</style>
+<div class="container d-flex justify-content-center align-items-center min-vh-100 px-2 px-sm-3 px-md-4">
+   <div class="card shadow-sm p-3 p-md-4 w-100" style="max-width: 400px;">
+      <h2 class="text-center mb-4 text-xl md:text-2xl font-semibold text-gray-800">Register</h2>
+      <form action="." method="post" class="d-flex flex-column gap-3">
+         {% csrf_token %}
+         {{ form.as_div }} <!-- Changed to as_div for better Bootstrap integration -->
+         <button type="submit" class="btn btn-primary w-100 mb-3 py-2 text-sm md:text-base">Register</button>
+         <p class="text-center mb-0 text-sm md:text-base">Already have an account? <a href="{% url 'login' %}"
+               class="text-info fw-medium hover:underline">Login here</a></p>
+      </form>
+   </div>
+</div>
+{% endblock content %}

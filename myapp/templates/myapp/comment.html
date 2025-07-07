@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+Comment
+{% endblock title %}
+
+{% block content %}
+<h2>Leave a Comment</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit Comment">
+</form>
+<p>If you want to go back to the photo, <a class="btn btn-info" href="">click here</a>.</p>
+
+{% endblock content %}

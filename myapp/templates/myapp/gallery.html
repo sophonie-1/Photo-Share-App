@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% block title %}Home {% endblock title %}
+<p></p>
+
+{% block content %}
+<div class="container g-2">
+  <div class="row m-3">
+    <div class="col-md-3 bg-info">
+      <p class="text-capitalize text-secondary text-bg-dark">Total image: {{Allphotos}}</p>
+      <p>{{request.user}} <a class="btn btn-warning" href="{% url 'logout' %}">logout</a></p>
+      <div class="card">
+        <div class="card-header">Categories</div>
+        <ul class="list-group list-group-flush">
+          <a href="{% url 'gallery' %}" class="btn btn-outline-info m-1">All</a>
+          {% for categ in categories %}
+          <a href="{% url 'gallery' %}" class="btn btn-outline-info m-1"
+            >{{categ}}</a
+          >
+          {% empty %}
+          <p class="text-center">No categories available</p>
+          {% endfor %}
+          <a
+            href="{% url 'create' %}"
+            class="btn btn-outline-success btn-sm m-1"
+            >Add photo</a
+          >
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9 bg-success">
+      <div class="row p-3">
+        {% for photo in photos %}
+        <div class="col-12 col-md-6 col-lg-4 my-2">
+          <div class="card">
+            <img
+              src="{{photo.image.url}}"
+              alt="..."
+              style="height: 150px; object-fit: cover"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{photo.category.name}}</h5>
+              <p class="card-text">{{photo.description}}</p>
+            </div>
+            <a
+              href="{% url 'image' photo.id %}"
+              class="btn btn-outline-dark btn-sm m-2"
+              >View</a
+            >
+            {% if request.user == photo.user %}
+             <p class="bg-info text-center text-capitalize">{{request.user}}</p>
+            {% endif %}
+            
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
